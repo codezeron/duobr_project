@@ -11,7 +11,6 @@ class RegisterPage extends StatelessWidget {
   final AuthStore _authStore = getIt<AuthStore>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
   RegisterPage({super.key});
 

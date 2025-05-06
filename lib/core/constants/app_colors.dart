@@ -22,4 +22,12 @@ class AppColors {
   static const Color textDarkQuaternary = Color(0xFFFFFFFF);
   static const Color cardDark = Color(0xFF1E1E1E);
   static const Color errorDark = Color(0xFFCF6679);
+
+  // Ranks
+  static const Color bronze = Color(0xFFCD7F32);
+  static const Color silver = Color(0xFFC0C0C0);
+  static const Color gold = Color(0xFFFFD700);
+  static const Color platinum = Color(0xFF00BFFF);
+  static const Color diamond = Color(0xFF00FFFF);
+  static const Color master = Color(0xFF8A2BE2);
 }

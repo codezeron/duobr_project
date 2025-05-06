@@ -1,6 +1,11 @@
 import 'package:duobr_project/core/routes/app_routes.dart';
+import 'package:duobr_project/presentation/pages/matches_page.dart';
+import 'package:duobr_project/presentation/stores/chat_store.dart';
+import 'package:duobr_project/presentation/stores/home_store.dart';
 import 'package:duobr_project/presentation/widgets/custom_appbar.dart';
+import 'package:duobr_project/presentation/widgets/player_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:duobr_project/core/di/injector.dart';
 import 'package:duobr_project/presentation/stores/auth_store.dart';
@@ -15,13 +20,41 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  final CardSwiperController _swiperController = CardSwiperController();
   final _authStore = getIt<AuthStore>();
+  final _homeStore = getIt<HomeStore>();
 
-  final List<Widget> _pages = [
-    Center(child: Text("Página Inicial")),
-    Center(child: Text("Buscar")),
-    Center(child: Text("Chat")),
-    Center(child: Text("Perfil")),
+  @override
+  void initState() {
+    super.initState();
+    _homeStore.fetchPlayers();
+  }
+
+  @override
+  void dispose() {
+    _swiperController.dispose();
+    super.dispose();
+  }
+
+  List<Widget> get _pages => [
+    Observer(
+      builder: (_) {
+        if (_homeStore.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final players = _homeStore.players;
+
+        if (players.isEmpty) {
+          return const Center(child: Text("Nenhum jogador encontrado."));
+        }
+
+        return PlayerSwiper(players: players, controller: _swiperController);
+      },
+    ),
+    const Center(child: Text("Buscar")),
+    MatchesPage(),
+    const Center(child: Text("Perfil")),
   ];
 
   @override
@@ -45,7 +78,12 @@ class HomePageState extends State<HomePage> {
             ],
           ),
           body: _pages[_currentIndex],
-          bottomNavigationBar: CustomBottomNav(currentIndex: _currentIndex, onTap: (index) => setState(() => _currentIndex = index)),
+          bottomNavigationBar: CustomBottomNav(
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              setState(() => _currentIndex = index);
+            },
+          ),
         );
       },
     );

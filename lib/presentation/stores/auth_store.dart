@@ -28,6 +28,8 @@ abstract class AuthStoreBase with Store {
     errorMessage = null;
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      user = _firebaseAuth.currentUser;
+      if (user == null) throw Exception("Usuário não encontrado.");
       Navigator.of(navigatorKey.currentContext!).pushReplacementNamed(AppRoutes.home);
     } on FirebaseAuthException catch (e) {
       errorMessage = _mapFirebaseError(e.code);
@@ -44,12 +46,14 @@ abstract class AuthStoreBase with Store {
     errorMessage = null;
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return; // O usuário cancelou o login
+      if (googleUser == null) return;
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
       await _firebaseAuth.signInWithCredential(credential);
+      user = _firebaseAuth.currentUser;
+      if (user == null) throw Exception("Usuário não encontrado.");
       Navigator.of(navigatorKey.currentContext!).pushReplacementNamed(AppRoutes.home);
     } on FirebaseAuthException catch (e) {
       errorMessage = _mapFirebaseError(e.code);

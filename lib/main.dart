@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'firebase_options.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setupDependencies();
   runApp(MyApp());

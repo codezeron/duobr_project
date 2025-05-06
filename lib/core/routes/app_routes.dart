@@ -1,6 +1,7 @@
 import 'package:duobr_project/presentation/pages/auth/register_page.dart';
 import 'package:duobr_project/presentation/pages/home_page.dart';
 import 'package:duobr_project/presentation/pages/auth/login_page.dart';
+import 'package:duobr_project/presentation/pages/matches_page.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -19,7 +20,7 @@ class AppRoutes {
       register: (context) => RegisterPage(),
       home: (context) => HomePage(),
       //   search: (context) => SearchPage(),
-      //   chat: (context) => ChatPage(),
+      chat: (context) => MatchesPage(),
       //   profile: (context) => ProfilePage(),
     };
   }
