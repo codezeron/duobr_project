@@ -48,6 +48,17 @@ dependencies:
   flutter_card_swiper: ^7.0.2
   flutter_dotenv: ^5.0.2
   intl: ^0.20.2
+  firebase_messaging: ^15.2.5
+  # Awesome plugins for local notifications
+  awesome_notifications_core: ^0.10.0 # use the latest core version available
+  awesome_notifications: ^0.10.0 # This version is managed by core plugin
+
+  # Awesome plugins for remote push notifications
+  awesome_notifications_fcm: ^0.10.0
+  image_picker: ^1.1.2
+  cloudinary_url_gen: ^1.0.0
+  cloudinary_api: ^1.0.0
+  firebase_storage: ^12.4.5
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +88,7 @@ flutter:
   assets:
     - .env
     - assets/images/google_logo.png
+    - assets/images/avatar_placeholder.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
